@@ -32,8 +32,8 @@ http.createServer((request, response) => {
 
     response.writeHead(200, { "Content-type": "text/html" });
     response.write(data);
-    resonse.end();
-  });  
+    response.end();
+  });
 }).listen(8080);
 
 console.log("My test server is running on Port 8080.");
