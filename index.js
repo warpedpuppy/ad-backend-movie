@@ -1,10 +1,10 @@
-const express = require('express');
-  morgan = require('morgan');
+const express = require('express'),
+  morgan = require('morgan'),
+  bodyParser = require('body-parser'),
+  uuid = require('uuid'),
+  methodOverride = require('method-override');
 
 const app = express();
-
-const bodyParser = require('body-parser'),
-  methodOverride = require('method-override');
 
 let topMovies = [
   {
@@ -60,7 +60,48 @@ app.get('/', (req, res) => {
 });
 
 app.get('/movies', (req, res) => {
+  // res.send('Successful GET request for all endpoints.');
   res.json(topMovies);
+});
+
+app.get('/movies/director', (req, res) => {
+  res.send('Successful GET of movie director.');
+});
+
+app.get('/movies/genres', (req, res) => {
+  res.send('Successful GET of movie genres.');
+});
+
+app.get('/movies/title', (req, res) => {
+  res.send('Successful GET of movie title.');
+});
+
+app.get('/users', (req, res) => {
+  res.send('Successful GET request for all users.');
+});
+
+app.get('/movies/:title', (req, res) => {
+  res.json(topMovies.find((topMovie) => {
+    return topMovie.title === req.params.title
+  }));
+});
+
+app.get('/movies/:director', (req, res) => {
+  res.json(topMovies.find((topMovie) => {
+    return topMovie.director === req.params.director
+  }));
+});
+
+app.get('/movies/:genres', (req, res) => {
+  res.json(topMovies.find((topMovie) => {
+    return topMovie.genres === req.params.genres
+  }));
+});
+
+app.get('/users/:username', (req, res) => {
+  res.json(users.find((user) => {
+    return user.username === req.params.username
+  }));
 });
 
 app.listen(8080, () => {
