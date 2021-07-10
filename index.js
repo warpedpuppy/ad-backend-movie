@@ -8,10 +8,17 @@ const app = express();
 
 let users = [
   {
-
     email: "test@test.com",
     username: 'testyMcTester',
-  }
+    favoriteList: [
+      {
+        id: '',
+        title: '',
+        director: '',
+        genre: '',
+      }
+    ]
+    }
 ]
 
 let movies = [
@@ -129,12 +136,18 @@ app.put('/users/:username/:newUsername', (req, res) => {
   }
   });
 // allows users to add to the favorite list
-app.post('/movies', (req, res) => {
+app.post('/users/:username/:favoriteList', (req, res) => {
   let newMovie = req.body;
 
-  if (!newMovie.title) {
+  if (!newMovie.title) {{
     const message = 'Missing title in request body';
-    res.status(400).send(message);
+    res.status(400).send(message)};
+  if (!newMovie.director){
+    const message2 = 'Missing director in request body';
+    res.status(400).send(message2)};
+  if (!newMovie.genre){
+    const message3 = 'Missing genre in request body';
+    res.status(400).send(message3)};
   } else {
     res.send('Movie had been added to favorites list.');
     newMovie.id = uuid.v4();
