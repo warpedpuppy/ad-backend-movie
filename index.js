@@ -7,6 +7,8 @@ mongoose = require('mongoose');
 Models = require('./models.js');
 Movies = Models.Movie;
 Users = Models.User;
+Directors = Models.Director;
+Genres = Models.Genre;
 
 mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -30,22 +32,44 @@ app.get('/movies', (req, res) => {
     res.status(500).send('Error: ' + err)
   });
 });
-//shows get request for directors
-app.get('/movies/:Director', (req, res) => {
-  Movies.findOne({ Director: req.params.Director })
-  .then((movie) => {
-    res.json(movie);
+//get request for all directors
+app.get('/directors', (req, res) => {
+  Directors.find()
+  .then((director) => {
+    res.status(201).json(director);
+  })
+  .catch(( err) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err)
+  });
+});
+//shows get request for directors by name
+app.get('/Director/:Name', (req, res) => {
+  Directors.findOne({ Name: req.params.Name })
+  .then((director) => {
+    res.json(director);
   })
   .catch((err) => {
     console.error(err);
     res.status(500).send('Error: ' + err)
   });
 });
-//shows get request for genres
-app.get('/movies/:Genre', (req, res) => {
-  Movies.findOne({ Genre: req.params.Genre })
-  .then((movie) => {
-    res.json(movie);
+//get request for all genres
+app.get('/genres', (req, res) => {
+  Genres.find()
+  .then((genres) => {
+    res.status(201).json(genres);
+  })
+  .catch(( err) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err)
+  });
+});
+//shows get request for genres by name
+app.get('/Genre/:Name', (req, res) => {
+  Genres.findOne({ Name: req.params.Name })
+  .then((genre) => {
+    res.json(genre);
   })
   .catch((err) => {
     console.error(err);
