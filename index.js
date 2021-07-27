@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({
 }));
 const cors = require('cors');
 
-let allowedOrigins = ['http://localhose:8080', 'http://testsite.com'];
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
 app.use(cors({
   origin: (origin, callback) => {
@@ -57,7 +57,7 @@ app.get('/movies', (req, res) => {
   });
 });
 //get request for all directors
-app.get('/directors', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/directors', (req, res) => {
   Directors.find()
   .then((director) => {
     res.status(201).json(director);
@@ -68,7 +68,7 @@ app.get('/directors', passport.authenticate('jwt', {session: false}), (req, res)
   });
 });
 //shows get request for directors by name
-app.get('/Director/:Name', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/Director/:Name', (req, res) => {
   Directors.findOne({ Name: req.params.Name })
   .then((director) => {
     res.json(director);
@@ -79,7 +79,7 @@ app.get('/Director/:Name', passport.authenticate('jwt', {session: false}), (req,
   });
 });
 //get request for all genres
-app.get('/genres', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/genres', (req, res) => {
   Genres.find()
   .then((genres) => {
     res.status(201).json(genres);
@@ -90,7 +90,7 @@ app.get('/genres', passport.authenticate('jwt', {session: false}), (req, res) =>
   });
 });
 //shows get request for genres by name
-app.get('/Genre/:Name', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/Genre/:Name', (req, res) => {
   Genres.findOne({ Name: req.params.Name })
   .then((genre) => {
     res.json(genre);
@@ -101,7 +101,7 @@ app.get('/Genre/:Name', passport.authenticate('jwt', {session: false}), (req, re
   });
 });
 //shows get request for movie titles
-app.get('/movie/:Title', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/movie/:Title', (req, res) => {
   Movies.findOne({ Title: req.params.Title })
   .then((movie) => {
     res.json(movie);
@@ -141,7 +141,7 @@ app.post('/movies', passport.authenticate('jwt', {session: false}), (req, res) =
   });
 });
 //Get all users
-app.get('/users', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/users', (req, res) => {
   Users.find()
   .then((users) => {
     res.status(201).json(users);
@@ -152,7 +152,7 @@ app.get('/users', passport.authenticate('jwt', {session: false}), (req, res) => 
   });
 });
 //GET users by username
-app.get('/users/:Username', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/users/:Username', (req, res) => {
   Users.findOne({ Username: req.params.Username })
   .then((users) => {
     res.json(users);
