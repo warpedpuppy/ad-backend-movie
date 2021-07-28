@@ -48,7 +48,7 @@ app.get('/', (req, res) => {
 });
 //get request for all movies
 app.get('/movies', async (req, res) => {
-  Movies.find()
+  await Movies.find()
   .then((movies) => {
     res.status(201).json(movies);
   })
