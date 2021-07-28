@@ -47,8 +47,8 @@ app.get('/', (req, res) => {
   res.send('My top 10 favorite movies!');
 });
 //get request for all movies
-app.get('/movies', async (req, res) => {
-  await Movies.find()
+app.get('/movies', (req, res) => {
+  Movies.find()
   .then((movies) => {
     res.status(201).json(movies);
   })
