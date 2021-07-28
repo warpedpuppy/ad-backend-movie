@@ -13,6 +13,7 @@ Genres = Models.Genre;
 // mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
+
 const app = express();
 const {check, validationResult} = require('express-validator');
 
@@ -46,7 +47,7 @@ app.get('/', (req, res) => {
   res.send('My top 10 favorite movies!');
 });
 //get request for all movies
-app.get('/movies', (req, res) => {
+app.get('/movies', async (req, res) => {
   Movies.find()
   .then((movies) => {
     res.status(201).json(movies);
