@@ -5,7 +5,9 @@ const Users = Models.User;
 const passport = require('passport')
 const {check, validationResult} = require('express-validator');
 //Get all users
-UsersRouter.get('/', (req, res) => {
+UsersRouter
+.get('/', (req, res) => {
+
     Users.find()
     .then((users) => {
       res.status(201).json(users);
