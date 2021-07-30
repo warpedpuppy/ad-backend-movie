@@ -5,7 +5,7 @@ const Users = Models.User;
 const passport = require('passport')
 const {check, validationResult} = require('express-validator');
 //Get all users
-UsersRouter.get('/users', (req, res) => {
+UsersRouter.get('/', (req, res) => {
     Users.find()
     .then((users) => {
       res.status(201).json(users);
@@ -15,7 +15,7 @@ UsersRouter.get('/users', (req, res) => {
       res.status(500).send('Error: ' + err)
     });
   })
-  .get('/users/:Username', (req, res) => {
+  .get('/:Username', (req, res) => {
     Users.findOne({ Username: req.params.Username })
     .then((users) => {
       res.json(users);
@@ -25,7 +25,7 @@ UsersRouter.get('/users', (req, res) => {
       res.status(500).send('Error: ' + err);
     });
   })
-  .put('/users/:Username', passport.authenticate('jwt', {session: false}), (req, res) => {
+  .put('/:Username', passport.authenticate('jwt', {session: false}), (req, res) => {
     let hashedPassword = Users.hashPassword(req.body.Password);
   
     let obj = {};
@@ -52,7 +52,7 @@ UsersRouter.get('/users', (req, res) => {
       }
     });
   })
-  .post('/users', [
+  .post('/', [
     check('Username', 'Username is required').isLength({min: 5}),
     check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
     check('Password', 'Password is required').not().isEmpty(),
@@ -87,7 +87,7 @@ UsersRouter.get('/users', (req, res) => {
       res.status(500).send('Error ' + error);
     });
   })
-  .post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {session: false}), (req, res) => {
+  .post('/:Username/movies/:MovieID', passport.authenticate('jwt', {session: false}), (req, res) => {
     Users.findOneAndUpdate({ Username: req.params.Username}, {
       $push: { FavoriteMovies: req.params.MovieID }
     },
@@ -101,7 +101,7 @@ UsersRouter.get('/users', (req, res) => {
       }
     });
   })
-  .delete('/users/:Username', passport.authenticate('jwt', {session: false}), (req, res) => {
+  .delete('/:Username', passport.authenticate('jwt', {session: false}), (req, res) => {
     Users.findOneAndRemove({ Username: req.params.Username })
     .then((user) => {
       if (!user) {
@@ -115,7 +115,7 @@ UsersRouter.get('/users', (req, res) => {
       res.status(500).send('Error: ' + err);
     });
   })
-  .delete('/users/:email', passport.authenticate('jwt', {session: false}), (req, res) => {
+  .delete('/:email', passport.authenticate('jwt', {session: false}), (req, res) => {
     Users.findOneAndRemove({ Email: req.params.Email })
     .then((user) => {
       if (!user) {
@@ -124,10 +124,6 @@ UsersRouter.get('/users', (req, res) => {
         res.status(200).send(req.params.Email + ' was deleted.');
       }
     })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send('Error: ' + err);
-    });
   });
 
   module.exports = UsersRouter;
